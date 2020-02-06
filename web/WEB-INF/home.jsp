@@ -14,7 +14,7 @@
     <body>
             <h1>Home Page</h1>
       
-        <p> Hello ${total}.</p>
+        <p> Hello ${username1}.</p>
 
 
         <br>

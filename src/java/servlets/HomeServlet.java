@@ -12,13 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.AccountService;
 
 /**
  *
  * @author 794456
  */
-public class LoginServlet extends HttpServlet {
+public class HomeServlet extends HttpServlet {
 HttpSession session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,27 +30,39 @@ HttpSession session;
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet HomeServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet HomeServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
-   
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       System.out.println("get request");
-        String logout = request.getParameter("logout");
-        String logoutMsg;
-        if (logout == null) {
-            System.out.println("");
-        } else {
-            logoutMsg = "you have successfully logged out";
-            request.setAttribute("logoutMsg", logoutMsg);
-            session.invalidate();
-            System.out.println("loghere");
-
-        }
-      
-        getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+//              session = request.getSession();
+//               String username1 = (String) session.getAttribute("username");
+//               
+//               request.setAttribute("username1", username1);
+//
+//    getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
     }
 
     /**
@@ -65,31 +76,7 @@ HttpSession session;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String msg;
-      AccountService as=new AccountService();
-           System.out.println("post request");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        if(as.login(username, password).equals(username) && password.equals("password")){
-               //String username1 = (String) session.getAttribute("username");
-               
-               request.setAttribute("username1", username);
-
-             getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
-        }else
-        {
-            msg="not the proper user";
-             request.setAttribute("msg", msg);
-             getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-        }
-       
-        
-
-        session = request.getSession();
-
-    session.setAttribute("username", username);
-    session.setAttribute("password",password);
-
+        processRequest(request, response);
     }
 
     /**
